@@ -28,3 +28,14 @@ npm run dev -- --open
 Solid apps are built with _adapters_, which optimise your project for deployment to different environments.
 
 By default, `npm run build` will generate a Node app that you can run with `npm start`. To use a different adapter, add it to the `devDependencies` in `package.json` and specify in your `vite.config.js`.
+
+## Notes
+
+You will get errors relating to not being able to resolve the following packages
+
+* aws-sdk
+* mock-aws-s3
+* nock
+* pg-hstore
+
+Just ignore these, the rest of the site should still work

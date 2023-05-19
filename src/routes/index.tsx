@@ -8,6 +8,7 @@ export default function Home() {
 
   function reportCode(code: string) {
     const b64_encoded = btoa(code);
+    console.log(b64_encoded)
     setCode(b64_encoded)
   }
 
