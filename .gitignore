@@ -1,4 +1,4 @@
-
+*.sqlite
 dist
 .solid
 .output
