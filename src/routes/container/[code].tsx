@@ -1,6 +1,8 @@
 import { RouteDataArgs, useRouteData } from "solid-start";
 import { createServerAction$, createServerData$, redirect } from "solid-start/server";
 import Container from "~/models/container";
+import Modal from "~/components/modal";
+import { createSignal, Show } from "solid-js";
 
 export function routeData({ params }: RouteDataArgs) {
   const container = createServerData$(async ([_, code]) => {
@@ -45,22 +47,25 @@ export default function ContainerViewer() {
         await container.save();
       }
     }
-    return redirect("/")
+    return redirect("/container")
   })
 
 
   const { container } = useRouteData<typeof routeData>();
 
+  const [modalShowing, setModalShowing] = createSignal(false);
+
   const label_class = "block text-gray-700 text-sm font-bold mb-2";
   const input_class = "appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-2";
   const display_class = input_class + " bg-slate-200"
   const button_class = "text-white font-bold py-2 px-4 rounded"
-  const submit_class = button_class + " bg-blue-500 hover:bg-blue-700"
-  const delete_class = button_class + " bg-red-500 hover:bg-red-700"
+  const small_button_class = button_class + " text-xs"
+  const positive_extra = " bg-blue-500 hover:bg-blue-700"
+  const negative_extra = " bg-red-500 hover:bg-red-700"
 
   return (
     <>
-      <Form class="text-left max-w-md mx-auto">
+      <Form class="text-left mx-auto">
         <input type="hidden" name="b64_code" value={container()?.b64_code} />
         <div class="mb-4 group">
           <label for="barcode_string" class={label_class}>Barcode</label>
@@ -106,9 +111,10 @@ export default function ContainerViewer() {
           </textarea>
         </div>
         <div class="grid grid-cols-2 gap-6">
-          <div class="w-full mb-6 flex justify-center">
+          {/* We want submit to appear first in markup so that forms submit with Enter*/}
+          <div class="row-start-1 col-start-2 w-full mb-6 flex justify-center">
             <button
-              class={submit_class}
+              class={button_class + positive_extra}
               type="submit"
               name="action"
               value="submit"
@@ -116,17 +122,46 @@ export default function ContainerViewer() {
               Submit
             </button>
           </div>
-          <div class="w-full mb-6 flex justify-center">
+          <div class="row-start-1 col-start-1 w-full mb-6 flex justify-center">
             <button
-              class={delete_class}
-              type="submit"
-              name="action"
-              value="delete"
+              class={button_class + negative_extra}
+              onclick={e => {
+                e.preventDefault();
+                setModalShowing(true);
+              }}
             >
               Delete
             </button>
           </div>
         </div>
+        <Show when={modalShowing()}>
+          <Modal>
+            <h1 class="text-xl text-center font-bold my-6">Are you sure?</h1>
+            <div class="grid grid-cols-2 gap-6">
+              <div class="w-full mb-6 flex justify-center">
+                <button
+                  class={small_button_class + negative_extra}
+                  type="submit"
+                  name="action"
+                  value="delete"
+                >
+                  Delete
+                </button>
+              </div>
+              <div class="w-full mb-6 flex justify-center">
+                <button
+                  class={small_button_class + positive_extra}
+                  onclick={e => {
+                    e.preventDefault();
+                    setModalShowing(false);
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </Modal>
+        </Show>
       </Form>
     </>
   );

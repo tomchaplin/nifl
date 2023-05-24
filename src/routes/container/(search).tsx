@@ -23,8 +23,7 @@ export function routeData() {
       }
     }
     const all_containers = await Container.findAll(sql_query);
-    const as_json = all_containers.map((c : any) => c.toJSON());
-    console.log(all_containers)
+    const as_json = all_containers.map((c: any) => c.toJSON());
     return as_json;
   }, {
     key: () => {
@@ -37,6 +36,7 @@ export function routeData() {
   })
 }
 
+
 export default function ContainerSearch() {
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -47,6 +47,17 @@ export default function ContainerSearch() {
   const setQuery = (newQuery: string) => {
     setSearchParams({ ...searchParams, query: newQuery })
   };
+
+  const basic_class = "py-2 px-2";
+
+  const buildTd = (container: any, contents: any) => (
+    <td>
+      <A href={`/container/${container.b64_code}`} class={basic_class + " block w-full h-full"}>
+        {contents}
+      </A>
+    </td>
+
+  )
 
   return (
     <>
@@ -64,20 +75,18 @@ export default function ContainerSearch() {
         <thead
           class="border-b">
           <tr>
-            <th>Contents</th>
-            <th>Date Added</th>
+            <th class={basic_class}>Contents</th>
+            <th class={basic_class}>Servings</th>
+            <th class={basic_class}>Date Added</th>
           </tr>
         </thead>
         <tbody>
           <For each={containers()}>
             {(container) =>
               <tr class="hover:bg-slate-200">
-                <td>
-                  <A href={`/container/${container.b64_code}`}>
-                    {container.contents}
-                  </A>
-                </td>
-                <td>{container.date_added_iso_string}</td>
+                {buildTd(container, container.contents)}
+                {buildTd(container, container.servings)}
+                {buildTd(container, container.date_added_iso_string)}
               </tr>
             }
           </For>
