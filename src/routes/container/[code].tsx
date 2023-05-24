@@ -1,4 +1,3 @@
-import { DataTypes } from "sequelize";
 import { RouteDataArgs, useRouteData } from "solid-start";
 import { createServerAction$, createServerData$, redirect } from "solid-start/server";
 import Container from "~/models/container";
@@ -19,7 +18,7 @@ export function routeData({ params }: RouteDataArgs) {
 
 export default function ContainerViewer() {
 
-  const [submitting, { Form }] = createServerAction$(async (form: FormData, { request }) => {
+  const [_submitting, { Form }] = createServerAction$(async (form: FormData, _event) => {
     const action = form.get("action") as string;
     const code = form.get("b64_code");
     const containers = await Container.findAll({ where: { b64_code: code } })

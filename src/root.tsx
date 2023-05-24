@@ -43,7 +43,7 @@ export default function Root() {
                 </li>
               </ul>
             </nav>
-            <main class="text-center mx-auto text-gray-700 p-4">
+            <main class="text-center mx-auto text-gray-700 p-4 max-w-lg">
               <Routes>
                 <FileRoutes />
               </Routes>
