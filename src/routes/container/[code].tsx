@@ -4,12 +4,12 @@ import Container from "~/models/container";
 
 export function routeData({ params }: RouteDataArgs) {
   const container = createServerData$(async ([_, code]) => {
-    const containers = await Container.findAll({ where: { b64_code: code } })
-    if (containers.length == 0) {
+    const container = await Container.findOne({ where: { b64_code: code } })
+    if (container == null) {
       let new_container = Container.build({ b64_code: code, contents: '' })
       return new_container.toJSON()
     } else {
-      return containers[0].toJSON()
+      return container.toJSON()
     }
   }, { key: () => ["container", params.code] })
 
@@ -21,10 +21,10 @@ export default function ContainerViewer() {
   const [_submitting, { Form }] = createServerAction$(async (form: FormData, _event) => {
     const action = form.get("action") as string;
     const code = form.get("b64_code");
-    const containers = await Container.findAll({ where: { b64_code: code } })
+    const container = await Container.findOne({ where: { b64_code: code } })
     if (action == "delete") {
-      if (containers.length > 0) {
-        await containers[0].destroy();
+      if (container != null) {
+        await container.destroy();
       }
     } else if (action == "submit") {
       let new_container_data = {
@@ -37,12 +37,12 @@ export default function ContainerViewer() {
       if (!isNaN(servings)) {
         new_container_data.servings = servings;
       }
-      if (containers.length == 0) {
+      if (container == null) {
         let new_container = Container.build(new_container_data);
         await new_container.save();
       } else {
-        containers[0].set(new_container_data)
-        await containers[0].save();
+        container.set(new_container_data)
+        await container.save();
       }
     }
     return redirect("/")

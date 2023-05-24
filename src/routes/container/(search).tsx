@@ -9,9 +9,12 @@ export function routeData() {
   return createServerData$(async (query: string) => {
     let sql_query;
     if (query == "") {
-      sql_query = {}
+      sql_query = {
+        order: [['date_added', 'DESC']]
+      }
     } else {
       sql_query = {
+        order: [['date_added', 'DESC']],
         where: {
           contents: {
             [Op.substring]: query
@@ -20,7 +23,7 @@ export function routeData() {
       }
     }
     const all_containers = await Container.findAll(sql_query);
-    const as_json = all_containers.map(c => c.toJSON());
+    const as_json = all_containers.map((c : any) => c.toJSON());
     console.log(all_containers)
     return as_json;
   }, {
