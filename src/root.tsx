@@ -34,11 +34,11 @@ export default function Root() {
         <Suspense>
           <ErrorBoundary>
             <nav class="bg-sky-800 flex justify-center">
-              <ul class="container flex items-center justify-center p-3 text-gray-200">
-                <li class={`border-b-2 ${active("/")} mx-1.5 sm:mx-6`}>
+              <ul class="container flex items-center justify-center p-3 text-gray-200 text-2xl">
+                <li class={`border-b-2 ${active("/")} mx-6`}>
                   <A href="/">Scan</A>
                 </li>
-                <li class={`border-b-2 ${active("/container")} mx-1.5 sm:mx-6`}>
+                <li class={`border-b-2 ${active("/container")} mx-6`}>
                   <A href="/container">Search</A>
                 </li>
               </ul>

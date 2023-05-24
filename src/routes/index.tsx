@@ -18,7 +18,7 @@ export default function Home() {
 
   const input_class = "appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-2";
   const button_class = "text-white font-bold py-2 px-4 rounded"
-  const positive_extra = " bg-blue-500 hover:bg-blue-700"
+  const positive_extra = " bg-sky-600 hover:bg-sky-800"
 
   return (
     <>

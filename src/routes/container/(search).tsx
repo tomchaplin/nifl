@@ -26,13 +26,8 @@ export function routeData() {
     const as_json = all_containers.map((c: any) => c.toJSON());
     return as_json;
   }, {
-    key: () => {
-      if (searchParams.query == undefined) {
-        return ""
-      } else {
-        return searchParams.query
-      }
-    }
+    key: () =>
+      searchParams.query == undefined ? "" : searchParams.query
   })
 }
 
@@ -73,7 +68,7 @@ export default function ContainerSearch() {
       </div>
       <table class="min-w-full text-left border-collapse table-fixed">
         <thead
-          class="border-b">
+          class="bg-sky-800 text-gray-200">
           <tr>
             <th class={basic_class}>Contents</th>
             <th class={basic_class}>Servings</th>
@@ -83,7 +78,7 @@ export default function ContainerSearch() {
         <tbody>
           <For each={containers()}>
             {(container) =>
-              <tr class="hover:bg-slate-200">
+              <tr class="hover:bg-sky-100 border-t border-slate-200">
                 {buildTd(container, container.contents)}
                 {buildTd(container, container.servings)}
                 {buildTd(container, container.date_added_iso_string)}

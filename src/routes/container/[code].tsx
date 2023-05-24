@@ -57,10 +57,10 @@ export default function ContainerViewer() {
 
   const label_class = "block text-gray-700 text-sm font-bold mb-2";
   const input_class = "appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-2";
-  const display_class = input_class + " bg-slate-200"
+  const display_class = input_class + " bg-sky-100"
   const button_class = "text-white font-bold py-2 px-4 rounded"
   const small_button_class = button_class + " text-xs"
-  const positive_extra = " bg-blue-500 hover:bg-blue-700"
+  const positive_extra = " bg-sky-600 hover:bg-sky-800"
   const negative_extra = " bg-red-500 hover:bg-red-700"
 
   return (
@@ -119,7 +119,7 @@ export default function ContainerViewer() {
               name="action"
               value="submit"
             >
-              Submit
+              Save
             </button>
           </div>
           <div class="row-start-1 col-start-1 w-full mb-6 flex justify-center">
