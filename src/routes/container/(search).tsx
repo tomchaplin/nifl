@@ -12,16 +12,18 @@ export function routeData() {
   const [searchParams] = useSearchParams();
   return createServerData$(async ([query, order]) => {
     let sql_query;
+    let nulls_last_order = [
+      [sequelize.literal(`CASE WHEN ${order[0]} = '' THEN 0 ELSE 1 END`), 'DESC'],
+      order,
+    ]
     if (query == "") {
       sql_query = {
-        order: [
-          [sequelize.literal(`CASE WHEN ${order[0]} = '' THEN 0 ELSE 1 END`), 'DESC'],
-          order,
-        ]
+        order: nulls_last_order
+
       }
     } else {
       sql_query = {
-        order: [order],
+        order: nulls_last_order,
         where: {
           contents: {
             [Op.substring]: query
