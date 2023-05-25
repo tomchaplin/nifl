@@ -60,8 +60,6 @@ export default function ContainerSearch() {
 
   const input_class = "appearance-none border w-full rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-2";
   const basic_class = "py-2 px-2";
-  const th_class = basic_class;
-  const th_div_class = "flex justify-start items-center"
 
   const buildTd = (container: any, contents: any, full_width: boolean) => (
     <td class={full_width ? "sm:w-3/5" : ""}>
@@ -73,7 +71,7 @@ export default function ContainerSearch() {
 
   // TODO: Make this reactive to query params and add links
   const buildArrow = (field: string) => {
-    const div_class = "block text-lg cursor-pointer bg-sky-900 px-1 rounded-xl ml-2"
+    const div_class = "block text-lg cursor-pointer bg-sky-900 px-1 rounded-xl ml-2 w-7 text-center"
     const current_field = order()[0];
     const current_direction = order()[1]
 
@@ -90,11 +88,13 @@ export default function ContainerSearch() {
 
     const contents = field == current_field
       ? (current_direction == "DESC" ? "↑" : "↓")
-      : "–"
+      : "·"
 
     return (<div class={div_class} onclick={arrowOnClick}>{contents}</div>)
   }
 
+  const th_class = basic_class;
+  const th_div_class = "flex justify-start items-center"
   const buildTh = (title: string, field: string) => (
     <th class={th_class}>
       <div class={th_div_class}>

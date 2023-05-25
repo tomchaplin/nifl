@@ -1,9 +1,14 @@
 import { Sequelize } from "sequelize";
 import SQLite from 'sqlite3';
 
-const sequelize = new Sequelize('database', 'name', 'pass', {
+const NIFL_DB_FILE = process.env.NIFL_DB_FILE || "database.sqlite";
+const NIFL_DB_NAME = process.env.NIFL_DB_NAME || 'database';
+const NIFL_DB_USERNAME = process.env.NIFL_DB_NAME || 'name';
+const NIFL_DB_PASSWORD = process.env.NIFL_DB_NAME || 'pass';
+
+const sequelize = new Sequelize(NIFL_DB_NAME, NIFL_DB_USERNAME, NIFL_DB_PASSWORD, {
   dialect: 'sqlite',
-  storage: 'database.sqlite',
+  storage: `./data/${NIFL_DB_FILE}`,
   dialectModule: SQLite,
   dialectOptions: {
     mode: SQLite.OPEN_READWRITE | SQLite.OPEN_CREATE,
