@@ -3,18 +3,25 @@ import { A, useRouteData, useSearchParams } from "solid-start";
 import { createServerData$ } from "solid-start/server";
 import Container from "~/models/container";
 import { Op } from "sequelize";
+import sequelize from "~/models/db";
+
+const DEFAULT_QUERY = "";
+const DEFAULT_ORDER = ["date_added", "DESC"]
 
 export function routeData() {
   const [searchParams] = useSearchParams();
-  return createServerData$(async (query: string) => {
+  return createServerData$(async ([query, order]) => {
     let sql_query;
     if (query == "") {
       sql_query = {
-        order: [['date_added', 'DESC']]
+        order: [
+          [sequelize.literal(`CASE WHEN ${order[0]} = '' THEN 0 ELSE 1 END`), 'DESC'],
+          order,
+        ]
       }
     } else {
       sql_query = {
-        order: [['date_added', 'DESC']],
+        order: [order],
         where: {
           contents: {
             [Op.substring]: query
@@ -26,8 +33,11 @@ export function routeData() {
     const as_json = all_containers.map((c: any) => c.toJSON());
     return as_json;
   }, {
-    key: () =>
-      searchParams.query == undefined ? "" : searchParams.query
+    key: () => {
+      let query = searchParams.query == undefined ? DEFAULT_QUERY : searchParams.query;
+      let order = searchParams.order == undefined ? DEFAULT_ORDER : JSON.parse(searchParams.order);
+      return [query, order]
+    }
   })
 }
 
@@ -36,9 +46,14 @@ export default function ContainerSearch() {
   const [searchParams, setSearchParams] = useSearchParams();
   const containers = useRouteData<typeof routeData>();
 
-  const query = searchParams.query == undefined ? "" : searchParams.query;
+  const query = () => searchParams.query == undefined ? DEFAULT_QUERY : searchParams.query;
   const setQuery = (newQuery: string) => {
     setSearchParams({ ...searchParams, query: newQuery })
+  };
+
+  const order = () => searchParams.order == undefined ? DEFAULT_ORDER : JSON.parse(searchParams.order);
+  const setOrder = (newOrder: string[]) => {
+    setSearchParams({ ...searchParams, order: JSON.stringify(newOrder) })
   };
 
   const input_class = "appearance-none border w-full rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-2";
@@ -57,9 +72,25 @@ export default function ContainerSearch() {
   // TODO: Make this reactive to query params and add links
   const buildArrow = (field: string) => {
     const div_class = "block text-lg cursor-pointer bg-sky-900 px-1 rounded-xl ml-2"
-    return field == 'date_added_iso_string'
-      ? (<div class={div_class}>&darr;</div>)
-      : (<div class={div_class}>&ndash;</div>)
+    const current_field = order()[0];
+    const current_direction = order()[1]
+
+    const arrowOnClick = (e) => {
+      const current_field = order()[0];
+      const current_direction = order()[1]
+      e.preventDefault();
+      const direction = current_field == field ? (
+        current_direction == "ASC" ? "DESC" : "ASC"
+      ) : "ASC";
+      const new_order = [field, direction];
+      setOrder(new_order);
+    }
+
+    const contents = field == current_field
+      ? (current_direction == "DESC" ? "↑" : "↓")
+      : "–"
+
+    return (<div class={div_class} onclick={arrowOnClick}>{contents}</div>)
   }
 
   const buildTh = (title: string, field: string) => (
@@ -77,7 +108,7 @@ export default function ContainerSearch() {
         <input
           type="text"
           name="barcode_string"
-          value={query}
+          value={query()}
           placeholder="Search term"
           class={input_class}
           oninput={(e) => { setQuery(e.target.value) }}
@@ -89,7 +120,7 @@ export default function ContainerSearch() {
           <tr>
             {buildTh('Contents', 'contents')}
             {buildTh('Servings', 'servings')}
-            {buildTh('Date Added', 'date_added_iso_string')}
+            {buildTh('Date Added', 'date_added')}
           </tr>
         </thead>
         <tbody>
