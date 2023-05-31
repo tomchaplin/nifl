@@ -16,9 +16,9 @@ export default function Home() {
 
   function reportError(_msg: string) { }
 
-  const input_class = "appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-2";
+  const input_class = "appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none border-slate-200 focus:border-slate-400";
   const button_class = "text-white font-bold py-2 px-4 rounded"
-  const positive_extra = " bg-sky-600 hover:bg-sky-800"
+  const positive_extra = " bg-slate-900 hover:bg-slate-600"
 
   return (
     <>

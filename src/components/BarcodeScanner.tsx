@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Html5QrcodeScanner } from "html5-qrcode";
 import { onCleanup, onMount } from 'solid-js'
+import './BarcodeScanner.css'
 
 export default function BarcodeScanner(props: any) {
 
@@ -28,6 +29,8 @@ export default function BarcodeScanner(props: any) {
 
 
   return (
-    <div ref={qrCodeScannerRef}></div>
+    <div class="bcs-container">
+      <div ref={qrCodeScannerRef}></div>
+    </div>
   );
 }

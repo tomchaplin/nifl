@@ -58,7 +58,7 @@ export default function ContainerSearch() {
     setSearchParams({ ...searchParams, order: JSON.stringify(newOrder) })
   };
 
-  const input_class = "appearance-none border w-full rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-2";
+  const input_class = "appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none border-slate-200 focus:border-slate-400";
   const basic_class = "py-2 px-2";
 
   const buildTd = (container: any, contents: any, full_width: boolean) => (
@@ -71,7 +71,7 @@ export default function ContainerSearch() {
 
   // TODO: Make this reactive to query params and add links
   const buildArrow = (field: string) => {
-    const div_class = "block text-lg cursor-pointer bg-sky-900 px-1 rounded-xl ml-2 w-7 text-center"
+    const div_class = "block text-lg cursor-pointer bg-slate-800 px-1 rounded-xl ml-2 w-7 text-center"
     const current_field = order()[0];
     const current_direction = order()[1]
 
@@ -118,7 +118,7 @@ export default function ContainerSearch() {
       </div>
       <table class="min-w-full text-left border-collapse table-fixed">
         <thead
-          class="bg-sky-800 text-gray-200">
+          class="bg-slate-900 text-white">
           <tr>
             {buildTh('Contents', 'contents')}
             {buildTh('Servings', 'servings')}
@@ -128,7 +128,7 @@ export default function ContainerSearch() {
         <tbody>
           <For each={containers()}>
             {(container) =>
-              <tr class="hover:bg-sky-100 border-t border-slate-200">
+              <tr class="hover:bg-slate-200 border-t border-slate-200">
                 {buildTd(container, container.contents, true)}
                 {buildTd(container, container.servings, false)}
                 {buildTd(container, container.date_added_iso_string, false)}

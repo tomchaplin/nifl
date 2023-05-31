@@ -56,12 +56,12 @@ export default function ContainerViewer() {
   const [modalShowing, setModalShowing] = createSignal(false);
 
   const label_class = "block text-gray-700 text-sm font-bold mb-2";
-  const input_class = "appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-2";
-  const display_class = input_class + " bg-sky-100"
+  const input_class = "appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none border-slate-200 focus:border-slate-400";
+  const display_class = input_class + " bg-slate-200"
   const button_class = "text-white font-bold py-2 px-4 rounded"
   const small_button_class = button_class + " text-xs"
-  const positive_extra = " bg-sky-600 hover:bg-sky-800"
-  const negative_extra = " bg-red-500 hover:bg-red-700"
+  const positive_extra = " bg-slate-900 hover:bg-slate-600"
+  const negative_extra = " bg-rose-800 hover:bg-red-700"
 
   return (
     <>
