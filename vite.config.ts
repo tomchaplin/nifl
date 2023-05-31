@@ -6,4 +6,7 @@ export default defineConfig({
   ssr: {
     external: ["sqlite3", "sqlite", "sequelize"]
   },
+  optimizeDeps: {
+    disabled: true
+  }
 });
