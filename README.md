@@ -39,3 +39,10 @@ You will get errors relating to not being able to resolve the following packages
 * pg-hstore
 
 Just ignore these, the rest of the site should still work
+
+## TODO
+
+- [ ] Write a README
+- [ ] Explain the docker container
+- [ ] Write types for `Container`
+- [ ] Colour schemes (configurable?)
