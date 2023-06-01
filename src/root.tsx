@@ -22,10 +22,11 @@ export default function Root() {
     (path == "/" ? path == location.pathname : location.pathname.startsWith(path))
       ? "bg-slate-800 rounded-t-xl"
       : "hover:bg-slate-800";
+  const li_padding="p-3 px-3 pb-2";
   return (
     <Html lang="en">
       <Head>
-        <Title>Nifl</Title>
+        <Title>❄ Nifl</Title>
         <Meta charset="utf-8" />
         <Meta name="viewport" content="width=device-width, initial-scale=1" />
         <Link rel="manifest" href="/manifest.json" />
@@ -37,14 +38,14 @@ export default function Root() {
         <Suspense>
           <ErrorBoundary>
             <nav class="bg-slate-900 flex justify-center pt-2">
-              <ul class="max-w-screen-md flex items-center justify-around text-white text-xl w-full">
-                <li class={`rounded-t-xl p-3 pb-2 ${active("/")} mx-6`}>
+              <ul class="max-w-screen-md flex items-end justify-around text-white text-xl w-full">
+                <li class={`rounded-t-xl ${li_padding} ${active("/")}`}>
                   <A href="/">Scan</A>
                 </li>
-                <li class="bg-slate-900 p-3 text-2xl">
-                  <A href="/">Nifl</A>
+                <li class={`bg-slate-900 text-2xl self-center py-3 px-0`}>
+                  <A href="/">❄ Nifl</A>
                 </li>
-                <li class={`rounded-t-xl p-3 pb-2 ${active("/container")} mx-6`}>
+                <li class={`rounded-t-xl ${li_padding} ${active("/container")}`}>
                   <A href="/container">Search</A>
                 </li>
               </ul>

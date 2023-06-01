@@ -40,6 +40,9 @@ You will get errors relating to not being able to resolve the following packages
 
 Just ignore these, the rest of the site should still work
 
+When running in dev mode, you will get source map issues from `html5-qrcode` (see [html5-qrcode/issues/396](https://github.com/mebjas/html5-qrcode/issues/396)).
+These should issues should go away once built.
+
 ## TODO
 
 - [ ] Write a README
